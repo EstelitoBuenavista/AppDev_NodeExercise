@@ -1,5 +1,5 @@
-import User from ('../models/user');
-import Joi from ('joi');
+import User from '../models/userModel.js';
+import Joi from 'joi';
 
 const registerSchema = Joi.object({
     username: Joi.string().min(3).max(30).required(),
@@ -13,7 +13,7 @@ const loginSchema = Joi.object({
 });
 
 // Register a new user
-const register = (req, res) => {
+export const register = (req, res) => {
     const { error } = registerSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
@@ -32,7 +32,7 @@ const register = (req, res) => {
 };
 
 // Login an existing user
-const login = (req, res) => {
+export const login = (req, res) => {
     const { error } = loginSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
@@ -49,7 +49,7 @@ const login = (req, res) => {
     res.json({ message: 'Login successful', user });
 };
 
-const profile = (req, res) => {
+export const profile = (req, res) => {
     const users = User.getAllUsers()    
 
     res.json(users)
