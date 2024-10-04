@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import Joi from 'joi';
+import jwt from 'jsonwebtoken'
 
 const registerSchema = Joi.object({
     username: Joi.string().min(3).max(30).required(),
@@ -31,7 +32,7 @@ export const register = (req, res) => {
     res.status(201).json({ message: 'User registered successfully', user: newUser });
 };
 
-// Login an existing user
+
 export const login = (req, res) => {
     const { error } = loginSchema.validate(req.body);
     if (error) {
@@ -40,13 +41,17 @@ export const login = (req, res) => {
 
     const { email, password } = req.body;
 
-    // Find user by email
+
     const user = User.findUserByEmail(email);
     if (!user || user.password !== password) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    res.json({ message: 'Login successful', user });
+    const token = jwt.sign({ id: user.id}, "tokensecret1", {
+        expiresIn: 86400,
+    });
+
+    res.json({ message: 'Login successful', user, token });
 };
 
 export const profile = (req, res) => {
@@ -55,7 +60,7 @@ export const profile = (req, res) => {
     res.json(users)
 }
 
-// Export the controller functions
+
 export default {
     register,
     login,
