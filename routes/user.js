@@ -6,6 +6,6 @@ import rateLimiter from '../middleware/rateLimiter.js';
 const userRouter = express.Router();
 userRouter.post('/register', register);
 userRouter.post('/login', login);
-userRouter.get('/',rateLimiter, authenticateToken, profile);
+userRouter.get('/', authenticateToken, profile);
 
 export default userRouter;
