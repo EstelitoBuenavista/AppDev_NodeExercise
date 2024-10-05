@@ -15,7 +15,6 @@ export default function rateLimiter(req, res, next)  {
             requests[userIP].startTime = currentTime;
         } else {
             requests[userIP].count += 1;
-            console.log(requests[userIP].count)
             if (requests[userIP].count > requestLimit) {
                 return res.status(429).send("Too many requests, please try again later."); 
             }
