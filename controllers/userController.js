@@ -55,8 +55,8 @@ export const login = (req, res) => {
 };
 
 export const profile = (req, res) => {
-    const users = User.getAllUsers()    
-
+    const users = User.findUserByID(parseInt(req.params.id))    
+    console.log(users)
     res.json(users)
 }
 

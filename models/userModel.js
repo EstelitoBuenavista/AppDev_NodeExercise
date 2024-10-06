@@ -24,6 +24,10 @@ function findUserByEmail(email) {
     return users.find(user => user.email === email);
 }
 
+function findUserByID(id) {
+    return users.find(user => user.id === id);
+}
+
 function createUser(newUser) {
     const id = users.length ? users[users.length - 1].id + 1 : 1; 
     const user = { id, ...newUser };
@@ -35,4 +39,5 @@ export default {
     getAllUsers,
     findUserByEmail,
     createUser,
+    findUserByID
 };
